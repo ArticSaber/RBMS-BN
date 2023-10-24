@@ -26,14 +26,14 @@ const authlogin = async (req, res, next) => {
     if (!isMatch) {
       throw new badRequest("Password is not correct");
     }
-    const token = jwtGenrator({ payload: User._id });
+    const token = jwtGenrator({ payload: { id: User._id, role: User.role } });
     res.cookie(
       "token",
       token,
       { httpOnly: true },
       { maxAge: 1000 * 60 * 60 * 24 }
     );
-    res.status(StatusCodes.OK).json({ message: "User Found" });
+    res.status(StatusCodes.OK).json({ message: "User Found", token: token });
   } catch (error) {
     next(error);
   }
