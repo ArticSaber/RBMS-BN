@@ -1,4 +1,5 @@
 import { StatusCodes } from "http-status-codes";
+import { logEvents } from "./logger.js";
 
 const errorHandlerMiddleware = (err, req, res, next) => {
   let customError = {
@@ -9,4 +10,15 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   res.status(customError.statusCode).json({ message: customError.message });
 };
 
-export default errorHandlerMiddleware;
+const errorHandler = (err, req, res, next) => {
+  logEvents(
+    `${err.name}: ${err.message}\t${req.method}\t${req.url}\t${req.headers.origin}`,"errLog.log");
+  console.error(err.stack);
+
+  const status = res.statusCode ? res.statusCode : 500; // server error
+
+  res.status(status);
+  res.json({ message: err.message });
+};
+
+export { errorHandlerMiddleware, errorHandler };

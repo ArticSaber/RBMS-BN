@@ -17,6 +17,7 @@ const authlogin = async (req, res, next) => {
   try {
     if (!req.body.email && !req.body.password) {
       throw new badRequest("Email and Password is required");
+      
     }
     const User = await authSchema.findOne({ email: req.body.email });
     if (!User) {
@@ -39,4 +40,22 @@ const authlogin = async (req, res, next) => {
   }
 };
 
-export { authSignup, authlogin };
+const authToken = async (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      throw new badRequest("Token not found");
+    }
+    const payload = jwtVerify(token);
+    const user = await authSchema.findById(payload._id);
+    if (!user) {
+      throw new badRequest("User not found");
+    }
+    req.user = user;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { authSignup, authlogin, authToken };
