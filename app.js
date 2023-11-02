@@ -19,7 +19,7 @@ app.use(cors(corsConfig));
 app.use(Express.json());
 app.use(cookieParser());
 // app.use(fileUpload({ useTempFiles: true }));
-app.use("/api/v1/auth", authrouter);
+app.use("/auth", authrouter);
 // app.use("/api/v1/user", authVerify, UserDetailRouter);
 app.use(errorHandler);
 
