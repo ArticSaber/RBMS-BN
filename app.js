@@ -7,9 +7,9 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import authRoute from "./router/authrouter.js";
 import root from "./router/root.js";
-import { logger } from "./Middleware/logger.js";
-import { errorHandler } from "./Middleware/error-handler.js";
-import corsOptions from "./config/corsOptions.js";
+// import { logger } from "./Middleware/logger.js";
+// import { errorHandler } from "./Middleware/error-handler.js";
+// import corsOptions from "./config/corsOptions.js";
 
 const app = Express();
 const PORT = 3000;
@@ -21,17 +21,17 @@ app.use(cors());
 app.use(cookieParser());
 app.use(Express.json());
 app.use(bodyParser.json());
-app.use("/", Express.static(path.join(__dirname, "/public")));
+app.use("/", Express.static(path.join(__dirname, "public")));
 
 // Routes
-app.use(logger);
+// app.use(logger);
 app.use("/auth", authRoute);
 app.use("/", root);
 
 // Logger
 
 // Error Handling
-app.use(errorHandler);
+// app.use(errorHandler);
 
 // 404 Handling
 app.all("*", (req, res) => {
