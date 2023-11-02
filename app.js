@@ -1,19 +1,19 @@
 import Express from "express";
 import dbConnection from "./db/dbConnection.js";
 import * as dotenv from "dotenv";
-import path from "path";
+// import path from "path";
 import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import authRoute from "./router/authrouter.js";
-import root from "./router/root.js";
+// import root from "./router/root.js";
 // import { logger } from "./Middleware/logger.js";
 // import { errorHandler } from "./Middleware/error-handler.js";
 // import corsOptions from "./config/corsOptions.js";
 
 const app = Express();
 const PORT = 3000;
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 
 dotenv.config();
 
@@ -21,12 +21,12 @@ app.use(cors());
 app.use(cookieParser());
 app.use(Express.json());
 app.use(bodyParser.json());
-app.use("/", Express.static(path.join(__dirname, "public")));
+// app.use("/", Express.static(path.join(__dirname, "public")));
 
 // Routes
 // app.use(logger);
 app.use("/auth", authRoute);
-app.use("/", root);
+// app.use("/", root);
 
 // Logger
 
@@ -34,16 +34,16 @@ app.use("/", root);
 // app.use(errorHandler);
 
 // 404 Handling
-app.all("*", (req, res) => {
-  res.status(404);
-  if (req.accepts("html")) {
-    res.sendFile(path.join(__dirname, "views", "404.html"));
-  } else if (req.accepts("json")) {
-    res.json({ message: "404 Not Found" });
-  } else {
-    res.type("txt").send("404 Not Found");
-  }
-});
+// app.all("*", (req, res) => {
+//   res.status(404);
+//   if (req.accepts("html")) {
+//     res.sendFile(path.join(__dirname, "views", "404.html"));
+//   } else if (req.accepts("json")) {
+//     res.json({ message: "404 Not Found" });
+//   } else {
+//     res.type("txt").send("404 Not Found");
+//   }
+// });
 
 const connection = () => {
   try {

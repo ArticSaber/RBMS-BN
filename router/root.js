@@ -1,11 +1,11 @@
-import Express from "express";
-import path from "path"
+// import Express from "express";
+// import path from "path"
 
-const router = Express.Router();
-const __dirname = path.resolve();
+// const router = Express.Router();
+// const __dirname = path.resolve();
 
-router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, ".", "views", "index.html"));
-});
+// router.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, ".", "views", "index.html"));
+// });
 
-export default router;
+// export default router;
