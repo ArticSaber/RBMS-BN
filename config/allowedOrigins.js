@@ -1,6 +1,6 @@
-const allowedOrigins = [
-  "http://localhost:3000",
-  "*" // for testing
-];
+// const allowedOrigins = [
+//   "http://localhost:3000",
+//   "*" // for testing
+// ];
 
-export default allowedOrigins;
+// export default allowedOrigins;

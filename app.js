@@ -17,7 +17,11 @@ const PORT = 3000;
 
 dotenv.config();
 
-app.use(cors());
+const corsConfig = {
+  credentials: true,
+  origin: true,
+};
+app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use(Express.json());
 app.use(bodyParser.json());
