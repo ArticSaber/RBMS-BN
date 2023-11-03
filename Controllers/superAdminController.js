@@ -11,9 +11,30 @@ const getallUsers = async (req, res, next) => {
     next(error);
   }
 };
-const getUser = async (req, res, next) => {
+const getSpecificUser = async (req, res, next) => {
   try {
     const User = await authSchema.find({ _id: req.params.id });
+    if (!User) throw badRequest("No User found");
+    res.status(StatusCodes.OK).json({ User });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getUser = async (req, res, next) => {
+  try {
+    const User = await authSchema.find({ role: "user" });
+    if (!User) throw badRequest("No User found");
+    res.status(StatusCodes.OK).json({ User });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+const getAdmin = async (req, res, next) => { 
+  try {
+    const User = await authSchema.find({ role: "admin" });
     if (!User) throw badRequest("No User found");
     res.status(StatusCodes.OK).json({ User });
   } catch (error) {
@@ -59,4 +80,4 @@ const deleteUser = async (req, res, next) => {
 
 
 
-export { addUser, editUser, deleteUser, getallUsers, getUser };
+export { addUser, editUser, deleteUser, getallUsers, getSpecificUser, getUser, getAdmin };

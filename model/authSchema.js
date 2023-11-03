@@ -18,18 +18,31 @@ const User = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 8,
-        },
+    },
+    firstname: {
+      type: String,
+      minlength: 3,
+    },
+    lastname: {
+      type: String,
+      minlength: 3,
+    },
+    phone: {
+      type: String,
+      minlength: 10,
+      maxlength: 10,
+    },
     role: {
       type: String,
-      enum: ["user", "admin","superadmin"],
+      enum: ["user", "admin", "superadmin"],
       default: "user",
     },
     active: {
       type: Boolean,
       default: true,
     },
-    },
-  
+  },
+
   { timestamps: true }
 );
 
