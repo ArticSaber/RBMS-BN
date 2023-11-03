@@ -7,6 +7,8 @@ import path from "path";
 import authrouter from "./router/authrouter.js";
 import cookieParser from "cookie-parser";
 import root from "./router/root.js";
+import superAdminRouter from "./router/superAdminRouter.js";
+
 
 const app = Express();
 const PORT = 3000;
@@ -22,6 +24,7 @@ app.use(Express.json());
 app.use(cookieParser());
 app.use("/", Express.static(path.join(__dirname, "public")));
 app.use("/auth", authrouter);
+app.use("/auth/sup", superAdminRouter);
 app.use("/",root);
 app.use(errorHandler);
 
