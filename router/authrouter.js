@@ -1,9 +1,11 @@
 import Express from "express";
-import  authlogin  from "../Controllers/authController.js";
+import  {authlogin, sendRole}  from "../Controllers/authController.js";
 
 const authrouter = Express.Router();
 
 
 authrouter.route("/login").post(authlogin);
+
+authrouter.route("/sendrole").post(sendRole)
 
 export default authrouter;

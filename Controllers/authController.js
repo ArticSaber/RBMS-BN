@@ -1,7 +1,8 @@
 import authSchema from "../model/authSchema.js";
 import { badRequest } from "../error/index.js";
 import { StatusCodes } from "http-status-codes";
-import { comparePassword, jwtGenrator } from "../utils/index.js";
+import { comparePassword, jwtGenrator, jwtVerify } from "../utils/index.js";
+import  jwt  from "jsonwebtoken";
 
 const authlogin = async (req, res, next) => {
   try {
@@ -26,4 +27,17 @@ const authlogin = async (req, res, next) => {
   }
 };
 
-export default authlogin ;
+const sendRole = async (req, res, next) => {
+  const token = req.cookies.token;
+  try {
+    if (!token) throw new badRequest("Token not found");
+    const payload = jwtVerify(token);
+    console.log(payload.payload.role);
+    res.status(StatusCodes.OK).json({ role: payload.payload.role });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export { authlogin ,sendRole} ;
