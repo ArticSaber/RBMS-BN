@@ -1,8 +1,7 @@
 import authSchema from "../model/authSchema.js";
 import { badRequest } from "../error/index.js";
 import { StatusCodes } from "http-status-codes";
-import { comparePassword, jwtGenrator, jwtVerify } from "../utils/index.js";
-import  jwt  from "jsonwebtoken";
+import { comparePassword, jwtGenrator } from "../utils/index.js";
 
 const authlogin = async (req, res, next) => {
   try {
@@ -21,23 +20,37 @@ const authlogin = async (req, res, next) => {
       { httpOnly: true },
       { maxAge: 1000 * 60 * 60 * 24 }
     );
-    res.status(StatusCodes.OK).json({ message: "User Found" });
+    res.cookie(
+      "role",
+      User.role,
+      { httpOnly: false },
+      { maxAge: 1000 * 60 * 60 * 24 }
+    );
+    if (User.role === "user") {
+      res.status(StatusCodes.OK).json({
+        Status: true,
+        message: "User Found",
+        role: User.role,
+        id: User._id,
+      });
+    } else {
+      res
+        .status(StatusCodes.OK)
+        .json({ Status: true, message: "User Found", role: User.role });
+    }
   } catch (error) {
     next(error);
   }
 };
 
-const sendRole = async (req, res, next) => {
-  const token = req.cookies.token;
+const getUser = async (req, res, next) => {
   try {
-    if (!token) throw new badRequest("Token not found");
-    const payload = jwtVerify(token);
-    console.log(payload.payload.role);
-    res.status(StatusCodes.OK).json({ role: payload.payload.role });
+    const User = await authSchema.find({ role: "user" });
+    if (!User) throw badRequest("No User found");
+    res.status(StatusCodes.OK).json({ User });
   } catch (error) {
     next(error);
   }
 };
 
-
-export { authlogin ,sendRole} ;
+export { authlogin, getUser };

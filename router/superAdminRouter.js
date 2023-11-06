@@ -1,12 +1,12 @@
 import Express from "express";
 import {
-  getUser,
   getAdmin,
   addUser,
   editUser,
   deleteUser,
   getallUsers,
   getSpecificUser,
+  getSuperAdmin,
 } from "../Controllers/superAdminController.js";
 import { verifyUser } from "../Middleware/Verify-User.js";
 import authVerify from "../Middleware/auth-verify.js";
@@ -14,12 +14,12 @@ import authVerify from "../Middleware/auth-verify.js";
 const superAdminRouter = Express.Router();
 
 superAdminRouter
-  .route("/getuser")
-  .get(authVerify, verifyUser("superadmin"), getUser);
-
-superAdminRouter
   .route("/getadmin")
   .get(authVerify, verifyUser("superadmin"), getAdmin);
+  
+superAdminRouter
+  .route("/getsuperadmin")
+  .get(authVerify, verifyUser("superadmin"), getSuperAdmin);
 
 superAdminRouter
   .route("/getusers")
@@ -31,11 +31,12 @@ superAdminRouter
 
 superAdminRouter
   .route("/adduser")
-  .post(authVerify, verifyUser("superadmin"), addUser);
+  .post(addUser);
+  // authVerify, verifyUser("superadmin"),
 
-superAdminRouter
-  .route("/update/:id")
-  .put(authVerify, verifyUser("superadmin"), editUser);
+  superAdminRouter
+    .route("/update/:id")
+    .put(authVerify, verifyUser("superadmin"), editUser);
 
 superAdminRouter
   .route("/delete/:id")

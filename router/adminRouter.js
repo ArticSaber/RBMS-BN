@@ -1,9 +1,11 @@
 import  Express  from "express";
-import { adminUpdate, adminDelete, addUser} from "../Controllers/adminController.js";
+import {getUser, adminUpdate, adminDelete, addUser} from "../Controllers/adminController.js";
 import { verifyUser } from "../Middleware/Verify-User.js";
 import authVerify from "../Middleware/auth-verify.js";
 
 const adminRouter = Express.Router();
+
+adminRouter.route("/getusers").get(authVerify, verifyUser('admin','superadmin'),getUser);
 
 adminRouter
     .route("/adduser")

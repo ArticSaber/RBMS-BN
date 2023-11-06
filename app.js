@@ -10,7 +10,6 @@ import root from "./router/root.js";
 import superAdminRouter from "./router/superAdminRouter.js";
 import adminRouter from "./router/adminRouter.js";
 
-
 const app = Express();
 const PORT = 3000;
 const corsConfig = {
@@ -24,7 +23,7 @@ app.use(cors(corsConfig));
 app.use(Express.json());
 app.use(cookieParser());
 app.use("/", Express.static(path.join(__dirname, "public")));
-app.use("/",root);
+app.use("/", root);
 app.use("/auth", authrouter);
 app.use("/auth/admin", adminRouter);
 app.use("/auth/sup", superAdminRouter);

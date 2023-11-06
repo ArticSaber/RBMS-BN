@@ -17,6 +17,16 @@ const addUser = async (req, res, next) => {
   }
 };
 
+const getUser = async (req, res, next) => {
+  try {
+    const User = await authSchema.find({ role: "user" });
+    if (!User) throw badRequest("No User found");
+    res.status(StatusCodes.OK).json({ User });
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 const adminUpdate = async (req, res, next) => {
   const userid = req.params.id;
@@ -59,4 +69,4 @@ const adminDelete = async (req, res, next) => {
     next(error);
   }
 };
-export { adminUpdate, adminDelete, addUser };
+export { adminUpdate, adminDelete, addUser, getUser };
