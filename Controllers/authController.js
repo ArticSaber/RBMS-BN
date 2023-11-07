@@ -14,27 +14,18 @@ const authlogin = async (req, res, next) => {
     const isMatch = await comparePassword(req.body.password, User.password);
     if (!isMatch) throw new badRequest("Password is not correct");
     const token = jwtGenrator({ payload: { id: User._id, role: User.role } });
-    console.log(User, isActive, isMatch, token);
-    res.cookie(
-      "token",
-      token,
-      {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-      },
-      { maxAge: 1000 * 60 * 60 * 24 }
-    );
-    res.cookie(
-      "role",
-      User.role,
-      {
-        httpOnly: false,
-        secure: true,
-        sameSite: "none",
-      },
-      { maxAge: 1000 * 60 * 60 * 24 }
-    );
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24,
+    });
+    res.cookie("role", User.role, {
+      httpOnly: false,
+      secure: true,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24,
+    });
     if (User.role === "user") {
       res.status(StatusCodes.OK).json({
         Status: true,
@@ -43,9 +34,7 @@ const authlogin = async (req, res, next) => {
         id: User._id,
       });
     } else {
-      res
-        .status(StatusCodes.OK)
-        .json({ Status: true, message: "User Found", role: User.role });
+      res.status(StatusCodes.OK).json({ Status: true, message: "User Found", role: User.role });
     }
   } catch (error) {
     next(error);
