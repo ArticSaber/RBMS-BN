@@ -13,15 +13,15 @@ import corsOptions from "./config/corsOptions.js";
 
 const app = Express();
 const PORT = 3000;
-// const corsConfig = {
-//   credentials: true,
-//   origin: true,
-// };
+const corsConfig = {
+  credentials: true,
+  origin: true,
+};
 
 const __dirname = path.resolve();
 
-// app.use(cors(corsOptions));
 app.use(cors(corsConfig));
+// app.use(cors(corsOptions));
 app.use(Express.json());
 app.use(cookieParser());
 app.use("/", Express.static(path.join(__dirname, "public")));
