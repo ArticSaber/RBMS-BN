@@ -9,16 +9,18 @@ import cookieParser from "cookie-parser";
 import root from "./router/root.js";
 import superAdminRouter from "./router/superAdminRouter.js";
 import adminRouter from "./router/adminRouter.js";
+import corsOptions from "./config/corsOptions.js";
 
 const app = Express();
 const PORT = 3000;
-const corsConfig = {
-  credentials: true,
-  origin: true,
-};
+// const corsConfig = {
+//   credentials: true,
+//   origin: true,
+// };
 
 const __dirname = path.resolve();
 
+// app.use(cors(corsOptions));
 app.use(cors(corsConfig));
 app.use(Express.json());
 app.use(cookieParser());
