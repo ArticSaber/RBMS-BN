@@ -27,7 +27,11 @@ const authlogin = async (req, res, next) => {
     res.cookie(
       "role",
       User.role,
-      { httpOnly: false },
+      {
+        httpOnly: false,
+        secure: true,
+        sameSite: "none",
+      },
       { maxAge: 1000 * 60 * 60 * 24 }
     );
     if (User.role === "user") {
